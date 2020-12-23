@@ -3,6 +3,7 @@ import sqlite3 as sql
 from datetime import datetime,timedelta
 import time as t
 from threading import Thread
+import requests
 '''import RPi.GPIO as m
 
 m.setmode(m.BCM)
@@ -34,103 +35,112 @@ def loginvalid():
         return render_template('login.html')
 
 
+def send():
+    requests.post("https://maker.ifttt.com/trigger/TDS1/with/key/gVTuepPOuqNB6yoM3TCJBQKXYd8rmZYOxkcKbRvD3xv")
+
+
 di = {0:"decision"}
 #de = {0:"normaldays",1:"internal",2:"endsem",3:"stop"}
 def total(act,start,end):
-	print(di)
-	a = datetime.strptime(start,"%Y-%m-%d")
-	b = datetime.strptime(end,"%Y-%m-%d")
-	delta = b-a
-	print("Total number of days: ",delta.days)
-	print(act)
-	while di[0]== act:
-		#di[0] = "decision"
-		print(di)
-		break
-	else:
-		di[0] = act
-		print(di)
-		dates = {}
-		for i in range(0,delta.days):
-			day = a + timedelta(days=i)
-			dates[str(day)[0:10]] = i+1
-			print("Total dates dictionary:",dates)
-			if(act == "normaldays"):
-				s = {"08:00:00":2,"08:50:00":3,"09:40:00":4,"10:30:00":5,"10:45:00":6,"11:35:00":7,"12:25:00":8,"13:15:00":9,"14:05:00":10,"14:55:00":11,"15:10:00":12,"16:00:00":13,"16:50:00":14,"17:40:00":15}
-				c = {"08:00:00":2,"08:50:00":1,"09:40:00":2,"10:30:00":3,"10:45:00":1,"11:35:00":4,"12:25:00":5,"13:15:00":1,"14:05:00":2,"14:55:00":3,"15:10:00":1,"16:00:00":4,"16:50:00":5,"17:40:00":6}
-				s_k = list(s.keys())
-				l = {"07:45:00":1}
-				q = 0
-			elif(act=="internal"):
-				s = {"08:50:00":2,"08:55:00":3,"09:00:00":4,"09:30:00":5,"10:00:00":6,"10:25:00":7,"10:50:00":10,"10:55:00":11,"11:00:00":12,"11:30:00":13,"12:00:00":14,"12:25:00":15,"13:20:00":18,"13:25:00":19,"13:30:00":20,"14:00:00":21,"14:30:00":22,"14:55:00":23,"15:20:00":26,"15:25:00":27,"15:30:00":28,"17:15:00":29,"17:11:00":30,"16:55:00":31}
-				l = {"08:45:00":1,"10:30:00":8,"10:45:00":9,"12:30:00":16,"13:15:00":17,"15:00:00":24,"15:15:00":25,"17:00:00":32}
-				c = {"08:50:00":1,"08:55:00":2,"09:00:00":3,"09:30:00":1,"10:00:00":2,"10:25:00":1,"10:50:00":1,"10:55:00":2,"11:00:00":3,"11:30:00":1,"12:00:00":2,"12:25:00":1,"13:20:00":1,"13:25:00":1,"13:30:00":3,"14:00:00":1,"14:30:00":2,"14:55:00":1,"15:20:00":1,"15:25:00":2,"15:30:00":3,"17:15:00":1,"17:11:00":2,"16:55:00":1}
-				s_k = list(s.keys())
-				q = 0
-			elif(act=="semester"):
-				s = {"08:50:00":2,"08:55:00":3,"09:00:00":4,"09:30:00":5,"10:00:00":6,"10:30:00":7,"11:00:00":8,"11:30:00":9,"11:45:00":10,"13:50:00":13,"13:55:00":14,"14:00:00":15,"14:30:00":16,"15:00:00":17,"15:30:00":18,"16:00:00":19,"16:30:00":20,"16:45:00":21}
-				l = {"08:45:00":1,"12:00:00":11,"13:45:00":12,"17:00:00":22}
-				c = {"08:50:00":1,"08:55:00":2,"09:00:00":3,"09:30:00":1,"10:00:00":2,"10:30:00":3,"11:00:00":4,"11:30:00":5,"11:45:00":1,"13:50:00":1,"13:55:00":2,"14:00:00":3,"14:30:00":1,"15:00:00":2,"15:30:00":3,"16:00:00":4,"16:30:00":5,"16:45:00":1}
-				s_k = list(s.keys())
-				q = 0
-			elif(act=="stop"):
-				s = {}
-				l = {}
-				c = {}
-				s_k = list(s.keys())
-				q = 0
-			while q<len(dates) and act== di.get(0):
-				p = 0
-				while p < len(s)+len(l) and act == di.get(0):
-					date = t.strftime("%Y-%m-%d")
-					m = t.strftime("%H:%M:%S")
-					if m in l and date in dates:
-						print(m)
-						p = 1 if l.get(m) is None else l.get(m)
-						print("p = ",p)
-						q = len(dates) if dates.get(date) is None else dates.get(date)
-						print("q = ",q)
-						print("long bell")
-						#longbell()
-						t.sleep(1)
-					elif m in s and date in dates:
-						p = 1 if s.get(m) is None else s.get(m)
-						print("p = ", p)
-						q = len(dates) if dates.get(date) is None else dates.get(date)
-						print("q = ", q)
-						r = c.get(m)
-						print("The bell should ring", r," times")
-						for i in range(r):
-							print("bell rings")
-							#shortbell()
-							t.sleep(1)
+    print(di)
+    a = datetime.strptime(start,"%Y-%m-%d")
+    b = datetime.strptime(end,"%Y-%m-%d")
+    delta = b-a
+    print("Total number of days: ",delta.days)
+    print(act)
+    di[0] = act
+    print(di)
+    dates = {}
+    for i in range(0,delta.days):
+        day = a + timedelta(days=i)
+        dates[str(day)[0:10]] = i+1
+    print("Total dates dictionary:",dates)
+    if(act == "normaldays"):
+        s = {"08:00:00":2,"08:50:00":3,"09:40:00":4,"10:30:00":5,"10:45:00":6,"11:35:00":7,"12:25:00":8,"13:15:00":9,"14:05:00":10,"14:55:00":11,"15:10:00":12,"16:00:00":13,"16:50:00":14,"17:40:00":15}
+        c = {"08:00:00":2,"08:50:00":1,"09:40:00":2,"10:30:00":3,"10:45:00":1,"11:35:00":4,"12:25:00":5,"13:15:00":1,"14:05:00":2,"14:55:00":3,"15:10:00":1,"16:00:00":4,"16:50:00":5,"17:40:00":6}
+        s_k = list(s.keys())
+        l = {"07:45:00":1}
+        q = 0
+    elif(act=="internal"):
+        s = {"08:50:00":2,"08:55:00":3,"09:00:00":4,"09:30:00":5,"10:00:00":6,"10:25:00":7,"10:50:00":10,"10:55:00":11,"11:00:00":12,"11:30:00":13,"12:00:00":14,"12:25:00":15,"13:20:00":18,"13:25:00":19,"13:30:00":20,"14:00:00":21,"14:30:00":22,"14:55:00":23,"15:20:00":26,"15:25:00":27,"15:30:00":28,"17:15:00":29,"17:11:00":30,"16:55:00":31}
+        l = {"08:45:00":1,"10:30:00":8,"10:45:00":9,"12:30:00":16,"13:15:00":17,"15:00:00":24,"15:15:00":25,"17:00:00":32}
+        c = {"08:50:00":1,"08:55:00":2,"09:00:00":3,"09:30:00":1,"10:00:00":2,"10:25:00":1,"10:50:00":1,"10:55:00":2,"11:00:00":3,"11:30:00":1,"12:00:00":2,"12:25:00":1,"13:20:00":1,"13:25:00":1,"13:30:00":3,"14:00:00":1,"14:30:00":2,"14:55:00":1,"15:20:00":1,"15:25:00":2,"15:30:00":3,"17:15:00":1,"17:11:00":2,"16:55:00":1}
+        s_k = list(s.keys())
+        q = 0
+    elif(act=="semester"):
+        s = {"08:50:00":2,"08:55:00":3,"09:00:00":4,"09:30:00":5,"10:00:00":6,"10:30:00":7,"11:00:00":8,"11:30:00":9,"11:45:00":10,"13:50:00":13,"13:55:00":14,"14:00:00":15,"14:30:00":16,"15:00:00":17,"15:30:00":18,"16:00:00":19,"16:30:00":20,"16:45:00":21}
+        l = {"08:45:00":1,"12:00:00":11,"13:45:00":12,"17:00:00":22}
+        c = {"08:50:00":1,"08:55:00":2,"09:00:00":3,"09:30:00":1,"10:00:00":2,"10:30:00":3,"11:00:00":4,"11:30:00":5,"11:45:00":1,"13:50:00":1,"13:55:00":2,"14:00:00":3,"14:30:00":1,"15:00:00":2,"15:30:00":3,"16:00:00":4,"16:30:00":5,"16:45:00":1}
+        s_k = list(s.keys())
+        q = 0
+    elif(act=="stop"):
+        s = {}
+        l = {}
+        c = {}
+        s_k = list(s.keys())
+        q = 0
+    while q<len(dates) and act== di.get(0):
+        p = 0
+        while p < len(s)+len(l) and act == di.get(0):
+            date = t.strftime("%Y-%m-%d")
+            m = t.strftime("%H:%M:%S")
+            if m in l and date in dates:
+                print(m)
+                p = 1 if l.get(m) is None else l.get(m)
+                print("p = ",p)
+                q = len(dates) if dates.get(date) is None else dates.get(date)
+                print("q = ",q)
+                print("long bell")
+                #thr = Thread(target = send)
+                #thr.start()
+                #longbell()
+                t.sleep(1)
+            elif m in s and date in dates:
+                p = 1 if s.get(m) is None else s.get(m)
+                print("p = ", p)
+                q = len(dates) if dates.get(date) is None else dates.get(date)
+                print("q = ", q)
+                r = c.get(m)
+                print("The bell should ring", r," times")
+                #thr = Thread(target = send)
+                #thr.start()
+                for i in range(r):
+                    print("bell rings")
+                    #shortbell()
+                    t.sleep(1)
+        print("previous schedule exits 1st while loop")
+    print("previous schedule exits 2nd while loop")
 
 
 def new(d_s,d_l,c):
     p = 0
     s_k = list(d_s.keys())
     while p < len(d_s)+len(d_l):
-    	date = t.strftime("%Y-%m-%d")
-    	m = t.strftime("%H:%M:%S")
-    	if m in d_l:
-    		print(m)
-    		print(date)
-    		p = 1 if d_l.get(m) is None else d_l.get(m)
-    		print("p = ",p)
-    		print("long bell")
-    		#longbell()
-    		t.sleep(1)
-    	elif m in d_s:
-    		print(m)
-    		print(date)
-    		p = 1 if d_s.get(m) is None else d_s.get(m)
-    		print("p = ",p)
-    		r = c.get(m)
-    		print("The bell should ring", r," times")
-    		for i in range(r):
-    			print("bell rings")
-    			#shortbell()
-    			t.sleep(1)
+        date = t.strftime("%Y-%m-%d")
+        m = t.strftime("%H:%M:%S")
+        if m in d_l:
+            print(m)
+            print(date)
+            p = 1 if d_l.get(m) is None else d_l.get(m)
+            print("p = ",p)
+            print("long bell")
+            #thr = Thread(target = send)
+            #thr.start()
+            #longbell()
+            t.sleep(1)
+        elif m in d_s:
+            print(m)
+            print(date)
+            p = 1 if d_s.get(m) is None else d_s.get(m)
+            print("p = ",p)
+            r = c.get(m)
+            print("The bell should ring", r," times")
+            #thr = Thread(target = send)
+            #thr.start()
+            for i in range(r):
+                print("bell rings")
+                #shortbell()
+                t.sleep(1)
     print("while loop exits")
 
 def EMERGENCY():
@@ -190,6 +200,7 @@ def exam():
         e_d = row[2]
     action = request.form['internal']
     #all(act,s_d,e_d)
+    di[0] = "decision"
     thr = Thread(target = total, args = [act,s_d,e_d])
     thr.start()
     return render_template('selection1.html')
