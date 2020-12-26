@@ -15,7 +15,6 @@
 			margin-right: 20px;
 			left:20px;
 			top:10%;
-			border-radius: 20px;
 
 		}
 		.button2{
@@ -31,7 +30,6 @@
 			margin-right: 20px;
 			left:20px;
 			top:10%;
-			border-radius: 20px;
 
 		}
 		.button3{
@@ -46,12 +44,11 @@
 			margin-right: 20px;
 			left:20px;
 			top:100%;
-			border-radius: 20px;
 
 
 		}
 		.button4{
-			background-color: #E9967A; 
+			background-color: #FF7F50; 
 			border: none;
 			color: white;
 			padding: 15px 32px;
@@ -60,11 +57,10 @@
 			display: inline-block;
 			font-size: 14px;
 			top:10%;
-			border-radius: 20px;
 
 		}
 		.button5{
-			background-color: #E9967A;
+			background-color: #FF7F50;
 			border: none;
 			color: white;
 			padding: 15px 32px;
@@ -73,20 +69,8 @@
 			display: inline-block;
 			font-size: 14px;
 			top:10%;
-			border-radius: 20px;
 
 
-		}
-		.button6{
-			background-color: #6495ED;
-			color: white;
-			position: absolute;
-			padding: 11px 22px;
-			text-align:center;
-			font-size: 14px;
-			left:1100px;
-			top:2px;
-			border-radius: 20px;
 		}
 		
   table {
@@ -104,7 +88,7 @@
     background-color:#827177;  ;
   }
   tr:nth-child(odd) {
-    background-color:#fff;
+    background-color: #fff;
   } 
 
 </style> 
@@ -198,19 +182,17 @@
 	<table style="border:1px solid black;margin-left:auto;margin-right:auto;" id="dataTable" width="350px" border="1">
 	<tr bgcolor="black">
 	<th style="color:#A3173F " >SELECT_DELETE</th>
-	<th style="color:#A3173F " >S.No</th>
-	<b><th style="color:#A3173F " >time</th></b>
+	<th style="color:#075D76 " >S.No</th>
+	<b><th style="color:#075D76 " >time</th></b>
 	
-	<b><th style="color:#A3173F"  >count</th></b>
-	<b><th style="color:#A3173F">BELL TYPE</th></b>
+	<b><th style="color:#075D76"  >count</th></b>
+	<b><th style="color:#075D76">BELL TYPE</th></b>
 <center>
   <input class="button5" type="button"  value="Add Row"  onclick="addRow('dataTable')">
   <input  class="button4" type="button"  value="Delete Row" onclick="deleteRow('dataTable')" />
   <button class="button" name="external" value="submit">Scheduler</button>
   <button class="button2" name="external" value="clear">Delete</button>
   <button class="button3" name="external" value="display">Alarm List</button>
-  <input class="button6"  name="external" value="logout" type="button" >
-
  </center>
 	</tr>
 		<TR>
