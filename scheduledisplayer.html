@@ -61,7 +61,7 @@ table, th, td {
 </head>
 <body>  
 <center><h2>Alarm Schedule Displayer</h2></center>
-<form id="alarm" method="POST">
+<form id="alarm" method="post">
 <center><table style="width:20%"></center>
     <tr>
         <th>S.No</th>
@@ -77,9 +77,9 @@ table, th, td {
                 <td>{{item.COUNT}}</td>
             </tr>
         {% endfor %}        
-    <button class="button" name="submit" value="submit">Scheduler</button>
-  <button class="button2" name="clear" value="clear">Delete</button>
-  <button class="button3" name="display" value="display">Alarm List</button>
+    <button class="button" name="external" value="submit">Scheduler</button>
+  <button class="button2" name="external" value="clear">Delete</button>
+  <button class="button3" name="external" value="display">Alarm List</button>
 </table>
 </form>
 <script >
