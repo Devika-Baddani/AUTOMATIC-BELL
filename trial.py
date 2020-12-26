@@ -44,10 +44,6 @@ def loginvalid():
         return render_template('login.html')
 
 
-def send():
-    requests.post("https://maker.ifttt.com/trigger/TDS1/with/key/gVTuepPOuqNB6yoM3TCJBQKXYd8rmZYOxkcKbRvD3xv")
-
-
 di = {0:"decision"}
 #de = {0:"normaldays",1:"internal",2:"endsem",3:"stop"}
 def total(act,start,end):
