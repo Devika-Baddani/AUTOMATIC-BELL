@@ -156,7 +156,7 @@ def new(start,end,d_s,d_l,c,act):
 
 def EMERGENCY():
     print("longbell")
-    #longbell()
+    longbell()
     date = t.strftime("%Y-%m-%d")
     a = datetime.strptime(date,"%Y-%m-%d")
     b = a + timedelta(days=1)
