@@ -12,13 +12,17 @@ m.setwarnings(False)
 m.output(17,0)
 def longbell():
     m.output(17,1)
+    #m.output(18,0)
     t.sleep(6)
     m.output(17,0)
+    #m.output(18,1)
 
 def shortbell():
     m.output(17,1)
+    #m.output(18,0)
     t.sleep(2)
     m.output(17,0)
+    #m.output(18,1)
     t.sleep(1)
 app=Flask(__name__)
 app.secret_key = 'PBSAasdertyuiop2020'
