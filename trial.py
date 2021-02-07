@@ -4,7 +4,7 @@ from datetime import datetime,timedelta
 import time as t
 from threading import Thread
 import requests
-'''import RPi.GPIO as m
+import RPi.GPIO as m
 
 m.setmode(m.BCM)
 m.setup(17,m.OUT)
@@ -19,7 +19,7 @@ def shortbell():
     m.output(17,1)
     t.sleep(2)
     m.output(17,0)
-    t.sleep(1)'''
+    t.sleep(1)
 app=Flask(__name__)
 app.secret_key = 'PBSAasdertyuiop2020'
 user_pass = {0:"user",1:"password"}
@@ -95,8 +95,8 @@ def total(act,start,end):
                 q = len(dates) if dates.get(date) is None else dates.get(date)
                 #print("q = ",q)
                 print("long bell")
-                #longbell()
-                t.sleep(1)
+                longbell()
+                #t.sleep(1)
             elif m in s and date in dates:
                 p = 1 if s.get(m) is None else s.get(m)
                 #print("p = ", p)
@@ -106,8 +106,8 @@ def total(act,start,end):
                 print("The bell should ring", r," times")
                 for i in range(r):
                     print("bell rings")
-                    #shortbell()
-                    t.sleep(1)
+                    shortbell()
+                    #t.sleep(1)
 
 def new(start,end,d_s,d_l,c,act):
     dates = {}
@@ -140,8 +140,8 @@ def new(start,end,d_s,d_l,c,act):
                     q = len(dates) if dates.get(date) is None else dates.get(date)
                     #print("q = ",q)
                     print("long bell")
-                    #longbell()
-                    t.sleep(1)
+                    longbell()
+                    #t.sleep(1)
                 elif m in d_s and date in dates:
                     print(m)
                     p = 1 if d_s.get(m) is None else d_s.get(m)
@@ -152,12 +152,12 @@ def new(start,end,d_s,d_l,c,act):
                     print("The bell should ring", r," times")
                     for i in range(r):
                         print("bell rings")
-                        #shortbell()
-                        t.sleep(1)
+                        shortbell()
+                        #t.sleep(1)
 
 def EMERGENCY():
     print("longbell")
-    #longbell()
+    longbell()
     date = t.strftime("%Y-%m-%d")
     a = datetime.strptime(date,"%Y-%m-%d")
     b = a + timedelta(days=1)
